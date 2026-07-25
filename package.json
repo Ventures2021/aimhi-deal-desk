@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "AiMhi Deal Desk — branded underwriting, investor tools, products, and capital site.",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "wrangler deploy --dry-run",
-    "deploy": "wrangler deploy"
+    "check": "node --check src/index.js && node --test",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "db:migrate:local": "wrangler d1 migrations apply aimhi-deal-desk-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply aimhi-deal-desk-db --remote"
   },
   "devDependencies": {
-    "wrangler": "^4.26.0"
-  },
-  "packageManager": "pnpm@10.13.1"
+    "wrangler": "^4.114.0"
+  }
 }

@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aimhi-deal-desk",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "vars": {
+    "APP_URL": "https://dealdesk.aimhi.io",
+    "CLOUDFLARE_ACCOUNT_ID": "7caba048ef387224b373043ed8fbd23b",
+    "NODE_ENV": "production"
+  }
+}

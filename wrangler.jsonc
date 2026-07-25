@@ -7,6 +7,20 @@
     "nodejs_compat",
     "global_fetch_strictly_public"
   ],
+  "placement": {
+    "mode": "smart"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 0.05
+    }
+  },
   "rules": [
     {
       "type": "Text",
@@ -26,6 +40,44 @@
   "vars": {
     "APP_URL": "https://dealdesk.aimhi.io",
     "CLOUDFLARE_ACCOUNT_ID": "7caba048ef387224b373043ed8fbd23b",
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "TURNSTILE_REQUIRED": "true",
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAD9keFrM90txemjd",
+    "TURNSTILE_EXPECTED_HOSTNAMES": "dealdesk.aimhi.io,aimhi.io",
+    "DOCUMENT_UPLOADS_ENABLED": "false"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "aimhi-deal-desk-db",
+      "database_id": "9d33eefa-0879-4686-992f-084588087d8c",
+      "migrations_dir": "migrations",
+      "migrations_table": "d1_migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCUMENTS",
+      "bucket_name": "aimhi-deal-desk-files"
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+        "binding": "PROCESSING_QUEUE",
+        "queue": "aimhi-deal-desk-processing"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "aimhi-deal-desk-processing",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 5,
+        "dead_letter_queue": "aimhi-deal-desk-processing-dlq",
+        "max_concurrency": 3,
+        "retry_delay": 30
+      }
+    ]
   }
 }

@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aimhi Deal Desk — Underwriting, Capital & Tools for CRE Investors</title>
+<meta name="description" content="Aimhi Deal Desk by Pryceless Ventures: institutional underwriting, investor tools, downloadable models, and commercial real-estate capital.">
+<meta name="theme-color" content="#14213D">
+<link rel="icon" href="aimhi-manifest-portal-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+
+:root{
+  --ink:#050713; --ink2:#0D104A; --panel:#10162b; --panel2:#111a35;
+  --line:rgba(190,194,214,.14); --line2:rgba(190,194,214,.28);
+  --gold:#00DEEB; --gold2:#1557FF; --mint:#00DEEB; --sky:#7A47FF; --coral:#FF1E56;
+  --txt:#F7F9FC; --mut:#BEC2D6; --mut2:#7f879f;
+  --rad:18px; --rads:12px;
+  --serif:'Inter',system-ui,sans-serif; --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--txt);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+a{color:inherit;text-decoration:none}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.serif{font-family:var(--serif)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.05;letter-spacing:-.02em}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:100px;font-weight:600;font-size:15px;cursor:pointer;border:none;transition:.2s;font-family:var(--sans)}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a2000}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(176,122,60,.34)}
+.btn-ghost{background:transparent;color:var(--txt);border:1px solid var(--line2)}
+.btn-ghost:hover{background:rgba(255,255,255,.06);border-color:var(--gold)}
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid var(--line2)}
+.tag-live{color:var(--mint);border-color:rgba(103,224,163,.4);background:rgba(103,224,163,.08)}
+.tag-soon{color:var(--sky);border-color:rgba(127,180,255,.35);background:rgba(127,180,255,.07)}
+section{padding:110px 0;position:relative}
+.sec-head{max-width:640px;margin-bottom:56px}
+.sec-head h2{font-size:clamp(34px,4.5vw,52px);margin:14px 0}
+.sec-head p{color:var(--mut);font-size:18px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(14px);background:rgba(7,16,31,.82);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:42px;height:42px;display:grid;place-items:center;flex:0 0 auto}
+.logo-mark img{width:100%;height:100%;display:block;object-fit:contain}
+.logo b{font-family:var(--serif);font-size:19px;display:block;line-height:1}
+.logo span{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:14px;color:var(--mut);transition:.2s}
+.nav-links a:hover{color:var(--txt)}
+@media(max-width:900px){.nav-links a:not(.btn){display:none}}
+.hero{padding-top:180px;padding-bottom:90px;position:relative;overflow:hidden}
+.hero-grid{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;position:absolute;inset:0;mask-image:radial-gradient(ellipse 80% 60% at 70% 20%,#000,transparent);opacity:.5}
+.hero-glow{position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(176,122,60,.16),transparent 65%);pointer-events:none}
+.hero-symbol{position:absolute;right:-4%;top:80px;width:min(52vw,680px);aspect-ratio:1;background:url('aimhi-manifest-portal.svg') center/contain no-repeat;opacity:.055;filter:drop-shadow(0 0 46px rgba(217,160,91,.18));pointer-events:none}
+.hero-in{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+@media(max-width:960px){.hero-in{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(42px,6.2vw,76px)}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{color:var(--mut);font-size:19px;margin:26px 0 32px;max-width:520px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:36px;margin-top:48px;flex-wrap:wrap}
+.hero-stats .n{font-family:var(--serif);font-size:38px;color:var(--gold)}
+.hero-stats .l{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink2)}
+.strip-in{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+@media(max-width:820px){.strip-in{grid-template-columns:repeat(2,1fr)}}
+.strip-i{padding:34px 28px;border-right:1px solid var(--line)}
+.strip-i:last-child{border-right:none}
+.strip-i .k{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.08em}
+.strip-i h4{font-family:var(--serif);font-size:20px;margin:10px 0 6px;font-weight:600}
+.strip-i p{color:var(--mut);font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--line);border-radius:var(--rad);padding:32px;transition:.25s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--line2);transform:translateY(-4px)}
+.card h3{font-size:24px;margin-bottom:8px}
+.card .price{font-family:var(--serif);font-size:34px;color:var(--gold);margin:16px 0 4px}
+.card .price small{font-size:15px;color:var(--mut);font-family:var(--sans)}
+.card ul{list-style:none;margin:20px 0}
+.card li{padding:9px 0 9px 26px;position:relative;color:var(--mut);font-size:14.5px;border-top:1px solid var(--line)}
+.card li:before{content:'';position:absolute;left:0;top:16px;width:12px;height:12px;border-radius:50%;background:rgba(176,122,60,.16);border:1.5px solid var(--gold)}
+.card-feat{border-color:rgba(176,122,60,.5);background:linear-gradient(180deg,rgba(176,122,60,.08),var(--ink2))}
+.ribbon{position:absolute;top:20px;right:-38px;background:var(--gold);color:#2a2000;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:5px 44px;transform:rotate(45deg);font-weight:700}
+.calc{background:linear-gradient(160deg,var(--panel2),var(--ink2));border:1px solid var(--line2);border-radius:24px;padding:8px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.calc-in{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+@media(max-width:820px){.calc-in{grid-template-columns:1fr}}
+.calc-inputs{padding:34px;border-right:1px solid var(--line)}
+.calc-out{padding:34px;background:rgba(0,0,0,.2);border-radius:0 20px 20px 0}
+.fld{margin-bottom:20px}
+.fld label{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:8px;font-family:var(--mono);letter-spacing:.04em}
+.fld label b{color:var(--gold);font-family:var(--sans)}
+.fld input[type=range]{width:100%;accent-color:var(--gold);height:5px}
+.calc-metric{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.calc-metric .ml{color:var(--mut);font-size:14px}
+.calc-metric .mv{font-family:var(--serif);font-size:28px}
+.calc-verdict{margin-top:22px;padding:18px;border-radius:14px;font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-align:center;text-transform:uppercase}
+.v-go{background:rgba(103,224,163,.12);color:var(--mint);border:1px solid rgba(103,224,163,.35)}
+.v-cond{background:rgba(176,122,60,.12);color:var(--gold2);border:1px solid rgba(176,122,60,.4)}
+.v-no{background:rgba(255,138,107,.12);color:var(--coral);border:1px solid rgba(255,138,107,.35)}
+.hm{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+@media(max-width:900px){.hm{grid-template-columns:1fr}}
+.hm-terms{background:var(--panel);border:1px solid var(--line);border-radius:var(--rad);overflow:hidden}
+.hm-row{display:flex;justify-content:space-between;padding:18px 26px;border-bottom:1px solid var(--line)}
+.hm-row:last-child{border:none}
+.hm-row .k{color:var(--mut);font-size:14px}
+.hm-row .v{font-family:var(--serif);font-size:18px;color:var(--gold)}
+.prod{display:flex;flex-direction:column;height:100%}
+.prod .thumb{height:120px;border-radius:12px;margin-bottom:20px;display:grid;place-items:center;font-family:var(--mono);font-size:17px;letter-spacing:.14em;color:rgba(255,255,255,.42);border:1px solid var(--line);background:linear-gradient(145deg,rgba(176,122,60,.08),rgba(20,33,61,.72)),url('aimhi-manifest-portal.svg') 92% 50%/74px no-repeat}
+.prod .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:18px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}}
+.form-grid .full{grid-column:1/-1}
+.inp{width:100%;padding:14px 16px;background:var(--ink2);border:1px solid var(--line2);border-radius:12px;color:var(--txt);font-size:15px;font-family:var(--sans)}
+.inp:focus{outline:none;border-color:var(--gold)}
+textarea.inp{min-height:110px;resize:vertical}
+.err{color:var(--coral);font-size:13px;margin-top:6px;display:none}
+.ok-msg{display:none;padding:18px;background:rgba(103,224,163,.1);border:1px solid rgba(103,224,163,.35);border-radius:12px;color:var(--mint);text-align:center}
+footer{border-top:1px solid var(--line);background:var(--ink2);padding:60px 0 40px}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+@media(max-width:800px){.foot-grid{grid-template-columns:1fr 1fr}}
+.foot-grid h5{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:16px}
+.foot-grid a{display:block;color:var(--mut);font-size:14px;padding:6px 0}
+.foot-grid a:hover{color:var(--gold)}
+.foot-bot{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;color:var(--mut2);font-size:13px;flex-wrap:wrap;gap:10px}
+.reveal{opacity:0;transform:translateY(24px);transition:.7s}
+.reveal.in{opacity:1;transform:none}
+
+
+/* AiMhi brand system — Potential, made visible. */
+body{
+  background:
+    radial-gradient(circle at 78% 8%,rgba(226,26,102,.12),transparent 28rem),
+    radial-gradient(circle at 12% 25%,rgba(21,87,255,.11),transparent 30rem),
+    var(--ink);
+}
+h1,h2,h3{font-weight:800;letter-spacing:-.045em}
+.serif{font-family:var(--sans)}
+.eyebrow{color:var(--mint)}
+.btn-gold{
+  color:#fff;
+  background:linear-gradient(120deg,#1557FF 0%,#7A47FF 48%,#E21A66 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 10px 32px rgba(21,87,255,.2)
+}
+.btn-gold:hover{box-shadow:0 16px 44px rgba(122,71,255,.38)}
+.btn-ghost:hover{border-color:#00DEEB;box-shadow:0 0 24px rgba(0,222,235,.12)}
+nav{background:rgba(5,7,19,.78)}
+.logo b{text-transform:lowercase;font-size:25px;font-weight:700;letter-spacing:-.06em}
+.logo span{color:#BEC2D6}
+.hero{min-height:800px}
+.hero-grid{
+  background-image:
+    linear-gradient(rgba(21,87,255,.13) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(21,87,255,.13) 1px,transparent 1px);
+  transform:perspective(700px) rotateX(56deg) scale(1.5);
+  transform-origin:center 30%;
+  mask-image:radial-gradient(ellipse 86% 62% at 66% 18%,#000,transparent)
+}
+.hero-glow{
+  top:-120px;right:-80px;width:760px;height:760px;
+  background:radial-gradient(circle,rgba(0,222,235,.15),rgba(21,87,255,.09) 32%,rgba(226,26,102,.08) 50%,transparent 70%)
+}
+.hero-symbol{opacity:.95;filter:drop-shadow(0 0 46px rgba(0,222,235,.18))}
+.hero h1 em{
+  font-style:normal;
+  color:transparent;
+  background:linear-gradient(90deg,#1557FF,#00DEEB 42%,#7A47FF 68%,#E21A66);
+  background-clip:text;-webkit-background-clip:text
+}
+.hero-stats .n,.hm-row .v,.price{color:#00DEEB!important}
+.strip{background:rgba(13,16,74,.38)}
+.strip-i .k{color:#00DEEB}
+.card,.hm-terms{
+  background:linear-gradient(160deg,rgba(16,22,43,.94),rgba(5,7,19,.96));
+  box-shadow:0 22px 70px rgba(0,0,0,.24)
+}
+.card:hover{border-color:rgba(0,222,235,.4);box-shadow:0 22px 70px rgba(21,87,255,.12)}
+.card-feat{
+  border-color:rgba(122,71,255,.7);
+  background:linear-gradient(160deg,rgba(21,87,255,.15),rgba(122,71,255,.08) 50%,rgba(5,7,19,.96))
+}
+.ribbon{background:linear-gradient(90deg,#1557FF,#E21A66);color:#fff}
+.card li:before{background:rgba(0,222,235,.12);border-color:#00DEEB}
+.calc{background:linear-gradient(145deg,rgba(13,16,74,.74),rgba(5,7,19,.98));border-color:rgba(122,71,255,.35)}
+.fld input[type=range]{accent-color:#00DEEB}
+.v-cond{background:rgba(122,71,255,.12);color:#bda8ff;border-color:rgba(122,71,255,.42)}
+.v-go{background:rgba(0,222,235,.1);color:#00DEEB;border-color:rgba(0,222,235,.35)}
+.prod .thumb{
+  color:#BEC2D6;
+  background:linear-gradient(145deg,rgba(21,87,255,.12),rgba(226,26,102,.08)),url('aimhi-manifest-portal.svg') 92% 50%/74px no-repeat
+}
+.inp:focus{border-color:#00DEEB;box-shadow:0 0 0 3px rgba(0,222,235,.1)}
+footer{background:#070a19}
+@media(max-width:960px){
+  .hero{min-height:auto}.hero-symbol{right:-22%;top:180px;width:85vw;opacity:.35}
+}
+@media(max-width:600px){
+  .wrap,.nav-in{padding-left:20px;padding-right:20px}
+  section{padding:78px 0}.hero{padding-top:145px}.hero-stats{gap:22px}
+  .strip-i{padding:26px 18px}.calc-inputs,.calc-out{padding:24px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.btn,.card{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-in">
+  <a class="logo" href="#top"><div class="logo-mark"><img src="aimhi-manifest-portal.svg" alt=""></div><div><b>Aimhi Deal Desk</b><span>By Pryceless Ventures</span></div></a>
+  <div class="nav-links">
+    <a href="#services">Underwriting</a>
+    <a href="#tools">Tools</a>
+    <a href="#products">Products</a>
+    <a href="#capital">Hard Money</a>
+    <a href="#start" class="btn btn-gold">Get started →</a>
+  </div>
+</div></nav>
+
+<section class="hero" id="top">
+  <div class="hero-grid"></div><div class="hero-glow"></div><div class="hero-symbol"></div>
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">Aim higher · decide with conviction</span>
+      <h1 style="margin-top:18px">Underwrite it. <em>Fund it.</em> Own the decision.</h1>
+      <p class="hero-sub">Aimhi Deal Desk by Pryceless Ventures is the decision engine for commercial real-estate investors — expert underwriting, in-browser deal tools, production-grade digital products, and bridge capital, all under one roof.</p>
+      <div class="hero-cta">
+        <a href="#services" class="btn btn-gold">Underwrite a deal →</a>
+        <a href="#tools" class="btn btn-ghost">Try the calculator</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="n">5 days</div><div class="l">Avg. deal turnaround</div></div><div><div class="n">94</div><div class="l">Underwriting checkpoints</div></div><div><div class="n">$2.34M</div><div class="l">Sample normalized NOI</div></div><div><div class="n">1.34×</div><div class="l">Sample base-case DSCR</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="calc" style="padding:0;background:linear-gradient(160deg,var(--panel),var(--ink2))">
+        <div style="padding:28px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <span class="eyebrow">Decision Brief · DEAL-0517</span><span class="tag tag-live">● Live</span>
+          </div>
+          <h3 style="font-size:22px;margin-bottom:4px">Should we acquire at the contract price?</h3>
+          <p style="color:var(--mut);font-size:13px;margin-bottom:18px">Value-add multifamily · 148 units · Southeast</p>
+          <div class="calc-metric"><span class="ml">Normalized NOI</span><span class="mv" style="font-size:22px">$2.34M</span></div>
+          <div class="calc-metric"><span class="ml">Going-in cap</span><span class="mv" style="font-size:22px">5.8%</span></div>
+          <div class="calc-metric"><span class="ml">DSCR (base)</span><span class="mv" style="font-size:22px">1.34×</span></div>
+          <div class="calc-verdict v-cond" style="margin-top:18px">◆ Conditional Go — verify exit cap</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip"><div class="wrap"><div class="strip-in">
+  <div class="strip-i"><div class="k">01 / Services</div><h4>Expert Underwriting</h4><p>Deals modeled to institutional standard in days, not weeks.</p></div>
+  <div class="strip-i"><div class="k">02 / Tools</div><h4>Investor Tools</h4><p>Run the numbers yourself with free in-browser calculators.</p></div>
+  <div class="strip-i"><div class="k">03 / Products</div><h4>Digital Products</h4><p>Our exact models, templates and playbooks, downloadable.</p></div>
+  <div class="strip-i"><div class="k">04 / Capital</div><h4>Hard Money</h4><p>Bridge & fix-and-flip capital that closes at deal speed.</p></div>
+</div></div></div>
+
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">01 — Underwriting Services</span>
+      <h2>We do the analysis your deal can't afford to get wrong.</h2>
+      <p>Every engagement ends the same way: a cited, defensible decision — Go, Conditional, or No — backed by a reviewed-facts snapshot you can hand straight to a lender or LP.</p>
+    </div>
+    <div class="grid3 reveal">
+  <div class="card ">
+    
+    <div style="margin-bottom:12px"><span class="tag tag-live">● Live now</span></div>
+    <h3>Deal Sprint</h3>
+    <p style="color:var(--mut);font-size:14.5px">One property, fully underwritten in 5 business days. Institutional rigor, boutique speed.</p>
+    <div class="price">$1,250<small> / deal</small></div>
+    <ul><li>Full T-12 & rent roll normalization</li><li>DSCR, DY, cap-rate & IRR model</li><li>Stress tests (-10% rev / +12% expense)</li><li>Cited decision brief: Go / Conditional / No</li><li>Reviewed-facts snapshot you can defend to an LP</li></ul>
+    <a href="#start" class="btn btn-ghost" style="width:100%;justify-content:center">Start now →</a>
+  </div>
+  <div class="card card-feat">
+    <div class="ribbon">POPULAR</div>
+    <div style="margin-bottom:12px"><span class="tag tag-live">● Live now</span></div>
+    <h3>Recurring Capacity</h3>
+    <p style="color:var(--mut);font-size:14.5px">A standing underwriting desk for active buyers. Pipeline throughput without the payroll.</p>
+    <div class="price">$3,500<small> / month</small></div>
+    <ul><li>Up to 6 deals underwritten monthly</li><li>Priority 72-hour turnaround</li><li>Comparative deal-stack dashboard</li><li>Named analyst + versioned audit trail</li><li>Quarterly thesis & buy-box calibration</li></ul>
+    <a href="#start" class="btn btn-gold" style="width:100%;justify-content:center">Start now →</a>
+  </div>
+  <div class="card ">
+    
+    <div style="margin-bottom:12px"><span class="tag tag-soon">◦ By engagement</span></div>
+    <h3>Portfolio Diligence</h3>
+    <p style="color:var(--mut);font-size:14.5px">Multi-asset acquisitions, refis and fund-level review priced to scope.</p>
+    <div class="price">Custom<small> engagement</small></div>
+    <ul><li>Portfolio roll-up & concentration analysis</li><li>Debt-stack & covenant review</li><li>Sensitivity & waterfall modeling</li><li>LP-ready investment committee memo</li><li>Data-room build & Q&A support</li></ul>
+    <a href="#start" class="btn btn-ghost" style="width:100%;justify-content:center">Request scope →</a>
+  </div></div>
+  </div>
+</section>
+
+<section id="tools" style="background:var(--ink2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">02 — Investor Tools</span>
+      <h2>Free tools that add value before you ever pay us.</h2>
+      <p>Underwriting shouldn't be a black box. Run a real deal through our live calculator right now — no signup.</p>
+    </div>
+    <div class="calc reveal" style="margin-bottom:40px">
+      <div class="calc-in">
+        <div class="calc-inputs">
+          <div style="margin-bottom:20px"><span class="eyebrow">Live Deal Underwriter</span></div>
+          <div class="fld"><label>Purchase price <b id="l_price">$5,000,000</b></label><input type="range" id="i_price" min="500000" max="20000000" step="100000" value="5000000"></div>
+          <div class="fld"><label>Annual NOI <b id="l_noi">$350,000</b></label><input type="range" id="i_noi" min="20000" max="2000000" step="10000" value="350000"></div>
+          <div class="fld"><label>Loan-to-value <b id="l_ltv">65%</b></label><input type="range" id="i_ltv" min="0" max="80" step="1" value="65"></div>
+          <div class="fld"><label>Interest rate <b id="l_rate">7.0%</b></label><input type="range" id="i_rate" min="4" max="14" step="0.1" value="7"></div>
+          <div class="fld"><label>Amortization (yrs) <b id="l_amort">30</b></label><input type="range" id="i_amort" min="10" max="30" step="1" value="30"></div>
+        </div>
+        <div class="calc-out">
+          <div style="margin-bottom:16px"><span class="eyebrow">Underwriting output</span></div>
+          <div class="calc-metric"><span class="ml">Going-in cap rate</span><span class="mv" id="o_cap">—</span></div>
+          <div class="calc-metric"><span class="ml">Debt yield</span><span class="mv" id="o_dy">—</span></div>
+          <div class="calc-metric"><span class="ml">Annual debt service</span><span class="mv" id="o_ds">—</span></div>
+          <div class="calc-metric"><span class="ml">DSCR</span><span class="mv" id="o_dscr">—</span></div>
+          <div class="calc-verdict" id="o_verdict">—</div>
+          <p style="color:var(--mut2);font-size:11px;margin-top:14px;line-height:1.4">Illustrative screening tool. Not investment advice or a lending commitment — a real underwrite reviews the full document set.</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid2 reveal">
+  <div class="card">
+    <div style="font-size:34px;color:var(--gold);margin-bottom:14px">◧</div>
+    <div style="margin-bottom:10px"><span class="tag tag-live">● Try it below</span></div>
+    <h3 style="font-size:20px">Live Deal Underwriter</h3>
+    <p style="color:var(--mut);font-size:14px;margin-top:6px">Model DSCR, debt yield and going-in cap in your browser. Instant Go / Conditional / No verdict.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:34px;color:var(--gold);margin-bottom:14px">◨</div>
+    <div style="margin-bottom:10px"><span class="tag tag-soon">◦ Coming soon</span></div>
+    <h3 style="font-size:20px">Rent-Roll Normalizer</h3>
+    <p style="color:var(--mut);font-size:14px;margin-top:6px">Drop a messy rent roll, get clean in-place vs market rent, loss-to-lease and economic occupancy.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:34px;color:var(--gold);margin-bottom:14px">◩</div>
+    <div style="margin-bottom:10px"><span class="tag tag-soon">◦ Coming soon</span></div>
+    <h3 style="font-size:20px">Cap-Stack Builder</h3>
+    <p style="color:var(--mut);font-size:14px;margin-top:6px">Layer senior debt, mezz and equity; see blended cost of capital and sponsor promote splits.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:34px;color:var(--gold);margin-bottom:14px">◪</div>
+    <div style="margin-bottom:10px"><span class="tag tag-soon">◦ Coming soon</span></div>
+    <h3 style="font-size:20px">Exit Sensitivity Grid</h3>
+    <p style="color:var(--mut);font-size:14px;margin-top:6px">Visualize IRR across exit-cap and hold-period assumptions in a single heat-mapped matrix.</p>
+  </div></div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">03 — Digital Products</span>
+      <h2>The exact system we underwrite with — yours to download.</h2>
+      <p>Prefer to run deals in-house? Our production models, memo templates and playbooks put an institutional desk on your laptop.</p>
+    </div>
+    <div class="grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+  <div class="card prod">
+    <div class="thumb">UW</div>
+    <div style="margin-bottom:8px"><span class="tag tag-live">● Available</span></div>
+    <h3 style="font-size:19px">The Underwriting Playbook</h3>
+    <p style="color:var(--mut);font-size:13.5px;margin-top:6px">The full 94-step institutional model, templates and decision rubric as a downloadable system.</p>
+    <div class="foot"><span class="price" style="font-size:26px;margin:0">$149</span>
+    <a href="#start" class="btn btn-gold" style="padding:10px 18px;font-size:13px">Buy →</a></div>
+  </div>
+  <div class="card prod">
+    <div class="thumb">XL</div>
+    <div style="margin-bottom:8px"><span class="tag tag-live">● Available</span></div>
+    <h3 style="font-size:19px">Deal Model Spreadsheet</h3>
+    <p style="color:var(--mut);font-size:13.5px;margin-top:6px">Our production multifamily model — T-12 normalizer, debt sizing, waterfall, all pre-wired.</p>
+    <div class="foot"><span class="price" style="font-size:26px;margin:0">$89</span>
+    <a href="#start" class="btn btn-gold" style="padding:10px 18px;font-size:13px">Buy →</a></div>
+  </div>
+  <div class="card prod">
+    <div class="thumb">LP</div>
+    <div style="margin-bottom:8px"><span class="tag tag-live">● Available</span></div>
+    <h3 style="font-size:19px">IC Memo Template Pack</h3>
+    <p style="color:var(--mut);font-size:13.5px;margin-top:6px">Investment-committee-ready memo templates that turn analysis into a decision LPs trust.</p>
+    <div class="foot"><span class="price" style="font-size:26px;margin:0">$59</span>
+    <a href="#start" class="btn btn-gold" style="padding:10px 18px;font-size:13px">Buy →</a></div>
+  </div>
+  <div class="card prod">
+    <div class="thumb">★</div>
+    <div style="margin-bottom:8px"><span class="tag tag-soon">◦ Coming soon</span></div>
+    <h3 style="font-size:19px">Buy-Box Masterclass</h3>
+    <p style="color:var(--mut);font-size:13.5px;margin-top:6px">A recorded course on building a defensible acquisition thesis and screening deals at speed.</p>
+    <div class="foot"><span class="price" style="font-size:26px;margin:0">$299</span>
+    <a href="#start" class="btn btn-ghost" style="padding:10px 18px;font-size:13px">Notify me</a></div>
+  </div></div>
+  </div>
+</section>
+
+<section id="capital" style="background:var(--ink2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">04 — Hard Money Lending</span>
+      <h2>Capital that closes at the speed you buy.</h2>
+      <p>Bridge and fix-and-flip capital for investors who move faster than a bank underwrites. Deal-first, common-sense lending.</p>
+    </div>
+    <div class="hm reveal">
+      <div class="hm-terms"><div class="hm-row"><span class="k">Loan amount</span><span class="v">$100K – $5M</span></div><div class="hm-row"><span class="k">Loan-to-cost</span><span class="v">up to 90%</span></div><div class="hm-row"><span class="k">Loan-to-value (ARV)</span><span class="v">up to 70%</span></div><div class="hm-row"><span class="k">Rates from</span><span class="v">9.9%</span></div><div class="hm-row"><span class="k">Term</span><span class="v">6 – 24 months</span></div><div class="hm-row"><span class="k">Close in</span><span class="v">as few as 7 days</span></div></div>
+      <div>
+        <h3 style="font-size:28px;margin-bottom:14px">Deal-first lending, not box-checking.</h3>
+        <p style="color:var(--mut);margin-bottom:20px">Because we underwrite the asset ourselves, we can size and price capital on the strength of the deal — bridge, acquisition, and fix-and-flip — and move when the clock matters.</p>
+        <a href="#start" class="btn btn-gold">Request a term sheet →</a>
+        <p style="color:var(--mut2);font-size:11.5px;margin-top:20px;line-height:1.5">Indicative terms, modeled for expansion. All lending is subject to underwriting, appraisal and final credit approval. Nothing here is a commitment to lend.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <div class="grid2" style="align-items:start;gap:56px">
+      <div class="reveal">
+        <span class="eyebrow">Get started</span>
+        <h2 style="font-size:clamp(32px,4vw,46px);margin:14px 0">Tell us about the deal.</h2>
+        <p style="color:var(--mut);font-size:17px">Send us the property and the decision you're trying to make. We'll come back with scope, timeline, and price — usually same day.</p>
+        <div style="margin-top:30px">
+          <div style="display:flex;gap:12px;align-items:center;padding:14px 0;border-top:1px solid var(--line)"><span style="color:var(--gold);font-size:20px">◧</span><span style="color:var(--mut);font-size:14px">Underwriting · Deal Sprint & Recurring Capacity</span></div>
+          <div style="display:flex;gap:12px;align-items:center;padding:14px 0;border-top:1px solid var(--line)"><span style="color:var(--gold);font-size:20px">◪</span><span style="color:var(--mut);font-size:14px">Hard money · bridge & fix-and-flip</span></div>
+          <div style="display:flex;gap:12px;align-items:center;padding:14px 0;border-top:1px solid var(--line)"><span style="color:var(--gold);font-size:20px">★</span><span style="color:var(--mut);font-size:14px">Products · models, templates & courses</span></div>
+        </div>
+      </div>
+      <div class="card reveal">
+        <form id="deal-form" novalidate>
+          <div class="form-grid">
+            <div><input class="inp" id="f_name" placeholder="Your name"><div class="err" id="e_name">Please enter your name.</div></div>
+            <div><input class="inp" id="f_email" type="email" placeholder="Email"><div class="err" id="e_email">Enter a valid email.</div></div>
+            <div class="full">
+              <select class="inp" id="f_service">
+                <option value="">What do you need? </option>
+                <option>Deal Sprint — underwrite one deal</option>
+                <option>Recurring Capacity — standing desk</option>
+                <option>Hard money — request a term sheet</option>
+                <option>Digital products</option>
+                <option>Something else</option>
+              </select>
+              <div class="err" id="e_service">Please choose an option.</div>
+            </div>
+            <div class="full"><textarea class="inp" id="f_msg" placeholder="The property & the decision you're trying to make…"></textarea></div>
+            <div class="full"><button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">Send it →</button></div>
+          </div>
+          <div class="ok-msg" id="ok">✓ Got it. We'll be in touch shortly with scope and pricing.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top"><div class="logo-mark"><img src="aimhi-manifest-portal.svg" alt=""></div><div><b>Aimhi Deal Desk</b><span>By Pryceless Ventures</span></div></a>
+        <p style="color:var(--mut);font-size:14px;margin-top:16px;max-width:280px">The decision engine for commercial real-estate investors.</p>
+      </div>
+      <div><h5>Services</h5><a href="#services">Deal Sprint</a><a href="#services">Recurring Capacity</a><a href="#services">Portfolio Diligence</a></div>
+      <div><h5>Explore</h5><a href="#tools">Investor Tools</a><a href="#products">Digital Products</a><a href="#capital">Hard Money</a></div>
+      <div><h5>Company</h5><a href="#start">Get started</a><a href="#top">How it works</a><a href="#capital">Term sheet</a></div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Pryceless Ventures. Illustrative figures. Not investment, legal or lending advice.</span>
+      <span style="font-family:var(--mono)">Built as a controlled decision system</span>
+    </div>
+  </div>
+</footer>
+<script>
+
+(function(){
+  var ids=['price','noi','ltv','rate','amort'];
+  function fmt(n){return '$'+Math.round(n).toLocaleString();}
+  function calc(){
+    var price=+document.getElementById('i_price').value;
+    var noi=+document.getElementById('i_noi').value;
+    var ltv=+document.getElementById('i_ltv').value;
+    var rate=+document.getElementById('i_rate').value;
+    var amort=+document.getElementById('i_amort').value;
+    document.getElementById('l_price').textContent=fmt(price);
+    document.getElementById('l_noi').textContent=fmt(noi);
+    document.getElementById('l_ltv').textContent=ltv+'%';
+    document.getElementById('l_rate').textContent=rate.toFixed(1)+'%';
+    document.getElementById('l_amort').textContent=amort;
+    var loan=price*(ltv/100);
+    var r=(rate/100)/12, n=amort*12;
+    var mp = loan===0?0:(r===0?loan/n:loan*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1));
+    var ds=mp*12;
+    var cap=noi/price*100;
+    var dy=loan===0?Infinity:noi/loan*100;
+    var dscr=ds===0?Infinity:noi/ds;
+    document.getElementById('o_cap').textContent=cap.toFixed(2)+'%';
+    document.getElementById('o_dy').textContent=(loan===0?'∞':dy.toFixed(1)+'%');
+    document.getElementById('o_ds').textContent=fmt(ds);
+    document.getElementById('o_dscr').textContent=(ds===0?'∞':dscr.toFixed(2)+'×');
+    var v=document.getElementById('o_verdict');
+    v.className='calc-verdict';
+    if(dscr>=1.35 && dy>=9){ v.classList.add('v-go'); v.textContent='◆ GO — cash-flow supports the debt'; }
+    else if(dscr>=1.20){ v.classList.add('v-cond'); v.textContent='◆ CONDITIONAL — thin coverage, verify assumptions'; }
+    else { v.classList.add('v-no'); v.textContent='◆ NO-GO — debt service outruns income'; }
+  }
+  ids.forEach(function(id){var el=document.getElementById('i_'+id); if(el) el.addEventListener('input',calc);});
+  if(document.getElementById('i_price')) calc();
+  var form=document.getElementById('deal-form');
+  if(form){
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var ok=true;
+      function chk(f,er,cond){var v=document.getElementById(er); if(cond){v.style.display='block';ok=false;}else{v.style.display='none';}}
+      chk('f_name','e_name',!document.getElementById('f_name').value.trim());
+      var em=document.getElementById('f_email').value.trim();
+      chk('f_email','e_email',!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em));
+      chk('f_service','e_service',!document.getElementById('f_service').value);
+      if(ok){ form.querySelectorAll('.form-grid').forEach(function(g){g.style.display='none';}); document.getElementById('ok').style.display='block'; }
+    });
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+})();
+
+</script>
+</body>
+</html>

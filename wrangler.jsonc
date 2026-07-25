@@ -1,10 +1,27 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "aimhi-deal-desk",
+  "main": "src/index.js",
   "compatibility_date": "2026-05-15",
   "compatibility_flags": [
     "nodejs_compat",
     "global_fetch_strictly_public"
+  ],
+  "rules": [
+    {
+      "type": "Text",
+      "globs": [
+        "**/*.html"
+      ],
+      "fallthrough": true
+    },
+    {
+      "type": "Text",
+      "globs": [
+        "**/*.svg"
+      ],
+      "fallthrough": true
+    }
   ],
   "vars": {
     "APP_URL": "https://dealdesk.aimhi.io",

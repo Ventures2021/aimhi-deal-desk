@@ -39,15 +39,63 @@ placement, or observability changes only in the dashboard.
   sponsor financials, payment data, or secrets on a queue.
 - Lender circulation, document issuance, consequential decisions, refunds, and
   legal/regulatory language require explicit human approval.
+- A lender-interest selection is not distribution authorization. Actual
+  circulation requires an unexpired approval tied to the exact package version
+  and exact recipients.
+- Public store and membership CTAs remain interest collection until checkout,
+  signed payment events, subscription state, entitlements, refunds, and
+  protected delivery pass end-to-end testing.
 
 ## API surface
 
 - `GET /health`
 - `GET /api/v1/capabilities`
+- `GET /api/v1/model-versions/current`
+- `GET /api/v1/underwriting/demo`
+- `POST /api/v1/underwriting/preview`
 - `POST /api/v1/intake`
 - `POST /api/v1/documents/register` (internal, disabled by default)
 - `POST /api/v1/approvals` (internal)
+- `POST /api/v1/model-versions/:versionId/decision` (internal)
+- `POST /api/v1/deals/:dealId/underwriting-runs` (internal, idempotent)
+- `GET /api/v1/deals/:dealId/underwriting-runs/:runId` (internal)
 
-The migration adds the deal/evidence/review/decision spine, immutable approval
+The migrations add the deal/evidence/review/decision spine, immutable approval
 and decision receipts, audit events, idempotency records, async document jobs,
-and the eight explicit model gaps identified in the workflow inventory.
+the deterministic underwriting model package, and purpose-classified public
+intake.
+
+## Deterministic underwriting
+
+The Worker—not the uploaded workbook—is the calculation source of truth.
+
+- Engine version: `2026.07.25`
+- Model version: `model-version-2026-07-25`
+- Timing: monthly
+- Return measures: unlevered, senior-levered, sponsor, and partner
+- Debt measures: senior and all-in DSCR, debt yield, LTV, LTC, and
+  loan-to-purchase
+- Refinance sizing: minimum of LTV, DSCR, and debt-yield constraints
+- Release gate: every blocker must pass, every review must be resolved, the
+  evidence snapshot must be complete, and the model version must be approved
+
+The original XLSM is an immutable source artifact and regression fixture. Its
+VBA is never executed. The source object belongs at:
+
+`model-packages/aimhi-underwriting/1.0.0/source/aimhi-sample-underwriting-model.xlsm`
+
+The public demo and preview routes never persist data. Persisted deal runs
+require the internal token, an existing workspace/deal, and an
+`Idempotency-Key` header.
+
+## Model release procedure
+
+1. Run `npm run check` and `npm run build`.
+2. Apply migrations `0003_underwriting_engine.sql` and
+   `0004_offering_intake.sql`.
+3. Upload the immutable source XLSM to its versioned R2 key.
+4. Confirm the stored SHA-256 matches the D1 model-version record.
+5. Validate the Worker against the corrected, desktop-recalculated golden
+   cases.
+6. Submit an internal model-version decision with a reviewer identity.
+7. Keep the version `in_review` until the approval receipt is written.

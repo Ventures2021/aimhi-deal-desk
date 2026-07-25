@@ -9,6 +9,7 @@ import {
   readJson,
   safeQueuePayload,
 } from "../src/lib.js";
+import { handleIntake } from "../src/api.js";
 
 test("normalization trims, collapses whitespace, and validates email", () => {
   assert.equal(normalizeText("  a \n b  ", 20), "a b");
@@ -61,4 +62,50 @@ test("queue envelopes discard unexpected sensitive fields", () => {
   assert.equal(payload.documentText, undefined);
   assert.equal(payload.email, undefined);
   assert.equal(payload.jobId, "job-1");
+});
+
+test("public intake requires an offering and permits a non-deal-specific request", async () => {
+  await assert.rejects(
+    handleIntake(
+      new Request("https://example.test/api/v1/intake", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email: "member@example.com",
+          assetType: "not-deal-specific",
+          decisionNeeded: "I would like details about membership access.",
+          privacyConsent: true,
+        }),
+      }),
+      { DB: {} },
+    ),
+    (error) =>
+      error instanceof HttpError &&
+      error.code === "validation_failed" &&
+      Boolean(error.details.interestArea) &&
+      !error.details.assetType,
+  );
+
+  await assert.rejects(
+    handleIntake(
+      new Request("https://example.test/api/v1/intake", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email: "member@example.com",
+          interestArea: "membership",
+          assetType: "not-deal-specific",
+          decisionNeeded: "Too short",
+          privacyConsent: true,
+        }),
+      }),
+      { DB: {} },
+    ),
+    (error) =>
+      error instanceof HttpError &&
+      error.code === "validation_failed" &&
+      Boolean(error.details.decisionNeeded) &&
+      !error.details.assetType &&
+      !error.details.interestArea,
+  );
 });

@@ -12,7 +12,7 @@
     "db:migrate:local": "wrangler d1 migrations apply aimhi-deal-desk-db --local",
     "db:migrate:remote": "wrangler d1 migrations apply aimhi-deal-desk-db --remote"
   },
-  "devDependencies": {
+  "dependencies": {
     "wrangler": "^4.114.0"
   }
 }

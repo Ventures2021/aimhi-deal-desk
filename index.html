@@ -7,6 +7,7 @@
   <meta name="description" content="Institutional commercial real estate underwriting with source-linked evidence, senior review, and a defensible go / no-go recommendation.">
   <meta name="theme-color" content="#050713">
   <link rel="icon" href="/aimhi-manifest-portal-icon.svg" type="image/svg+xml">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
   <style>
     :root{
       --obsidian:#050713;--midnight:#10143A;--lift:#0B0F26;
@@ -22,7 +23,7 @@
     html{scroll-behavior:smooth}
     body{margin:0;background:var(--obsidian);color:var(--white);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
     a{color:inherit;text-decoration:none}
-    button,input{font:inherit}
+    button,input,select,textarea{font:inherit}
     button{color:inherit}
     .wrap{width:min(1180px,calc(100% - 48px));margin:auto}
     .eyebrow{display:flex;align-items:center;gap:10px;color:var(--gold);font-size:12px;line-height:16px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
@@ -133,6 +134,20 @@
     .start .lead{color:var(--label-white)}
     .start .eyebrow{color:#725f32}
     .start .button-secondary{border-color:#bdc4d2}
+    .intake-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:26px;background:#eef1f6;border:1px solid #d5dae4;border-radius:14px}
+    .intake-form>.full{grid-column:1/-1}
+    .form-field{display:grid;gap:7px}
+    .form-field.full{grid-column:1/-1}
+    .form-field label{color:#3e475a;font-size:12px;font-weight:650;letter-spacing:.03em;text-transform:uppercase}
+    .form-field input,.form-field select,.form-field textarea{width:100%;border:1px solid #aeb7c8;border-radius:5px;padding:12px;background:var(--white);color:var(--obsidian)}
+    .form-field textarea{min-height:112px;resize:vertical}
+    .consent{display:flex;align-items:flex-start;gap:10px;color:#3e475a;font-size:13px;line-height:19px}
+    .consent input{width:auto;margin-top:3px}
+    .form-status{display:none;grid-column:1/-1;padding:12px 14px;border-radius:5px;font-size:13px}
+    .form-status.visible{display:block}
+    .form-status.success{background:#dbf3e8;color:#0c6544}
+    .form-status.error{background:#fde4e9;color:#9f1431}
+    .honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
     footer{padding:38px 0;background:#03040b;border-top:1px solid var(--line)}
     .footer-inner{display:flex;justify-content:space-between;gap:28px;color:var(--dim);font-size:13px}
     @media(max-width:900px){
@@ -146,6 +161,7 @@
       .wrap{width:min(100% - 32px,1180px)}.nav-inner{height:68px}.brand-label{display:none}
       .hero{padding:76px 0 60px}section{padding:72px 0}
       .paper-top{display:block}.verdict{margin-top:16px}.paper-metrics,.metric-grid,.deliverables,.trust-grid,.process{grid-template-columns:1fr}
+      .intake-form{grid-template-columns:1fr}.intake-form>.full{grid-column:auto}
       .tabs{overflow:auto}.tab{white-space:nowrap}.panel{padding:20px}
       .trust-item,.step{border-right:0}.footer-inner{display:block}.footer-inner div+div{margin-top:12px}
     }
@@ -356,11 +372,58 @@
           <h2>Start with the decision you need to make.</h2>
           <p class="lead">We will confirm scope, turnaround, required documents, and the secure intake path before any property information is exchanged.</p>
         </div>
-        <div class="actions">
-          <a class="button button-primary" href="mailto:dealdesk@aimhi.io?subject=Underwriting%20scope%20request">Request a confidential scoping call</a>
-          <a class="button button-secondary" href="#approach">Review the process</a>
-          <p class="small" style="width:100%;margin:0">Do not email confidential property documents. A secure intake link is provided after scope confirmation.</p>
-        </div>
+        <form class="intake-form" id="intake-form">
+          <div class="form-field">
+            <label for="first-name">First name</label>
+            <input id="first-name" name="firstName" autocomplete="given-name" maxlength="80">
+          </div>
+          <div class="form-field">
+            <label for="last-name">Last name</label>
+            <input id="last-name" name="lastName" autocomplete="family-name" maxlength="80">
+          </div>
+          <div class="form-field full">
+            <label for="email">Work email</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+          </div>
+          <div class="form-field">
+            <label for="company">Company</label>
+            <input id="company" name="company" autocomplete="organization" maxlength="160">
+          </div>
+          <div class="form-field">
+            <label for="asset-type">Asset type</label>
+            <select id="asset-type" name="assetType" required>
+              <option value="">Select one</option>
+              <option value="multifamily">Multifamily</option>
+              <option value="industrial">Industrial</option>
+              <option value="retail">Retail</option>
+              <option value="office">Office</option>
+              <option value="hospitality">Hospitality</option>
+              <option value="self-storage">Self-storage</option>
+              <option value="mixed-use">Mixed-use</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="decision-needed">Decision needed</label>
+            <textarea id="decision-needed" name="decisionNeeded" minlength="20" maxlength="1000" required placeholder="What decision must the underwriting support? Do not include confidential property, tenant, borrower, or financial details."></textarea>
+          </div>
+          <div class="form-field honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <label class="consent full">
+            <input name="privacyConsent" type="checkbox" required>
+            <span>I consent to Aimhi using these details to respond to this scope request. I understand that this form is not a secure document-upload channel.</span>
+          </label>
+          <label class="consent full">
+            <input name="lenderOptIn" type="checkbox">
+            <span>I may want an optional lender introduction later. This does not authorize circulation of any materials.</span>
+          </label>
+          <div class="full cf-turnstile" data-sitekey="0x4AAAAAAD9keFrM90txemjd" data-theme="light" data-action="intake"></div>
+          <button class="button button-primary full" type="submit">Request scope review</button>
+          <div class="form-status" id="intake-status" role="status" aria-live="polite"></div>
+          <p class="small full" style="margin:0">Do not submit confidential property documents or sensitive financial information. A secure intake path is provided after scope confirmation.</p>
+        </form>
       </div>
     </section>
   </main>
@@ -450,6 +513,40 @@
         const enabled = auth.getAttribute("aria-checked") !== "true";
         auth.setAttribute("aria-checked", String(enabled));
         document.getElementById("audit-log").insertAdjacentHTML("beforeend", `<div>${new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})} · ${enabled ? "Illustrative authorization enabled by user" : "Authorization revoked; circulation locked"}</div>`);
+      });
+
+      const intakeForm = document.getElementById("intake-form");
+      const intakeStatus = document.getElementById("intake-status");
+      intakeForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const submit = intakeForm.querySelector('button[type="submit"]');
+        submit.disabled = true;
+        intakeStatus.className = "form-status visible";
+        intakeStatus.textContent = "Sending your scope request…";
+        const fields = new FormData(intakeForm);
+        const payload = Object.fromEntries(fields.entries());
+        payload.privacyConsent = fields.has("privacyConsent");
+        payload.lenderOptIn = fields.has("lenderOptIn");
+        payload.turnstileToken = fields.get("cf-turnstile-response") || "";
+        try {
+          const response = await fetch("/api/v1/intake", {
+            method: "POST",
+            headers: {"content-type": "application/json"},
+            body: JSON.stringify(payload),
+          });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error || "request_failed");
+          intakeStatus.className = "form-status visible success";
+          intakeStatus.textContent = `Request received. Your reference is ${result.referenceCode}.`;
+          intakeForm.reset();
+          if (window.turnstile) window.turnstile.reset();
+        } catch {
+          intakeStatus.className = "form-status visible error";
+          intakeStatus.textContent = "We could not record the request. Please try again or email dealdesk@aimhi.io without attachments.";
+          if (window.turnstile) window.turnstile.reset();
+        } finally {
+          submit.disabled = false;
+        }
       });
     })();
   </script>

@@ -1,5 +1,6 @@
 import indexHtml from "../index.html";
 import markSvg from "../aimhi-manifest-portal.svg";
+import ogPng from "../aimhi-og.png";
 import { consumeDocumentJobs, routeApi } from "./api.js";
 import { HttpError, json, requestId, withSecurity } from "./lib.js";
 
@@ -47,6 +48,17 @@ async function handleFetch(request, env) {
       new Response(markSvg, {
         headers: {
           "content-type": "image/svg+xml; charset=utf-8",
+          "cache-control": "public, max-age=86400, stale-while-revalidate=604800",
+        },
+      }),
+    );
+  }
+
+  if (pathname.endsWith("/aimhi-og.png")) {
+    return withSecurity(
+      new Response(ogPng, {
+        headers: {
+          "content-type": "image/png",
           "cache-control": "public, max-age=86400, stale-while-revalidate=604800",
         },
       }),

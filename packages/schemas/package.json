@@ -1,0 +1,13 @@
+{
+  "name": "@aimhi/schemas",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit false --outDir dist"
+  }
+}

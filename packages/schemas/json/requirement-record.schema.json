@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aimhi.io/schemas/requirement-record.schema.json",
+  "title": "RequirementRecord",
+  "type": "object",
+  "required": ["id", "capability", "status", "notes"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "capability": { "type": "string", "minLength": 1 },
+    "status": { "$ref": "./feature-status.schema.json" },
+    "notes": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

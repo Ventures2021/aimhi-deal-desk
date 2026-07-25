@@ -127,6 +127,8 @@ dist
 
 # pnpm
 .pnpm-store
+.turbo
+packages/*/dist
 
 # yarn v3
 .pnp.*

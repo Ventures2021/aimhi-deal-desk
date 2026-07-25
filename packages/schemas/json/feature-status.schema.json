@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aimhi.io/schemas/feature-status.schema.json",
+  "title": "FeatureStatus",
+  "type": "string",
+  "enum": ["implemented", "scaffolded", "mocked", "blocked", "future"]
+}

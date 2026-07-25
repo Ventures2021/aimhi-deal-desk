@@ -1,0 +1,10 @@
+{
+  "name": "@aimhi/authorization",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit false --outDir dist"
+  }
+}

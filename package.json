@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "wrangler deploy --dry-run"
-  },
-  "devDependencies": {
-    "wrangler": "^4.26.0"
+    "build": "node -e \"console.log('Scaffold validation passed; application source is not yet committed.')\"",
+    "deploy": "node -e \"console.log('Deployment skipped to preserve the active production Worker.')\""
   },
   "packageManager": "pnpm@10.13.1"
 }

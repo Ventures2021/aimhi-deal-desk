@@ -1,6 +1,7 @@
 {
   "name": "aimhi-deal-desk",
   "version": "1.0.0",
+  "description": "AiMhi Deal Desk — branded underwriting, investor tools, products, and capital site.",
   "private": true,
   "scripts": {
     "build": "wrangler deploy --dry-run",

@@ -1,0 +1,24 @@
+{
+  "name": "@aimhi/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "wrangler deploy --dry-run --config wrangler.jsonc",
+    "deploy": "wrangler deploy --config wrangler.jsonc",
+    "dev": "wrangler dev --config wrangler.jsonc",
+    "lint": "eslint src test --ext .ts --max-warnings=0",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --test test/**/*.test.js",
+    "db:migrate:local": "wrangler d1 migrations apply aimhi-deal-desk-db --local --config wrangler.jsonc",
+    "db:migrate:remote": "wrangler d1 migrations apply aimhi-deal-desk-db --remote --config wrangler.jsonc",
+    "db:validate": "wrangler d1 migrations apply aimhi-deal-desk-db --local --config wrangler.jsonc"
+  },
+  "dependencies": {
+    "@aimhi/authorization": "workspace:*",
+    "@aimhi/brand": "workspace:*",
+    "@aimhi/observability": "workspace:*",
+    "@aimhi/schemas": "workspace:*",
+    "wrangler": "^4.114.0"
+  }
+}

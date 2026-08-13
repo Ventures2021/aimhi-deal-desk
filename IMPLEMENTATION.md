@@ -1,53 +1,43 @@
 # Aimhi Deal Desk implementation
 
-## Live foundation
+## Current delivery status
 
-- Worker: `aimhi-deal-desk`
-- D1 binding `DB`: `aimhi-deal-desk-db`
-- R2 binding `DOCUMENTS`: `aimhi-deal-desk-files`
-- Producer/consumer binding `PROCESSING_QUEUE`: `aimhi-deal-desk-processing`
-- Dead-letter queue: `aimhi-deal-desk-processing-dlq`
-- Smart Placement enabled
-- Workers Logs at 100% during launch stabilization
-- Traces sampled at 5%
+This repository now delivers **Phase A + Phase B** foundation work in a reviewable form:
 
-Wrangler is the configuration source of truth. Do not make persistent binding,
-placement, or observability changes only in the dashboard.
+- monorepo conversion (pnpm + Turborepo)
+- strict TypeScript baseline
+- existing web/intake worker moved into `apps/web`
+- processing/workflow workers established as real Worker apps
+- shared architecture package boundaries with typed public entrypoints
+- PR quality gates for formatting, lint, typecheck, unit tests, D1 migration validation, and worker dry-run builds
 
-## Required deployment sequence
+## Preserved behavior
 
-1. Install dependencies with `npm ci`.
-2. Run `npm run check` and `npm run build`.
-3. Apply D1 migrations with `npm run db:migrate:remote`.
-4. Configure secrets with `wrangler secret put`:
-   - `INTERNAL_API_TOKEN`
-   - `IP_HASH_PEPPER`
-   - `TURNSTILE_SECRET_KEY` only when Turnstile is enabled
-5. Deploy with `npm run deploy`.
-6. Verify `/health` and `/api/v1/capabilities`.
+The following existing behavior remains preserved in `apps/web`:
 
-## Security gates
+- `/health`
+- `/api/v1/capabilities`
+- `/api/v1/intake`
+- internal `/api/v1/documents/register` and `/api/v1/approvals` safeguards
+- Turnstile verification and security headers
+- metadata-only queue payload discipline
+- `DOCUMENT_UPLOADS_ENABLED=false` default
+- processing path remains blocked until providers are configured
 
-- Turnstile is required for the public intake endpoint. The managed widget is
-  restricted to `dealdesk.aimhi.io` and `aimhi.io`; server validation also
-  enforces the `intake` action.
-- `DOCUMENT_UPLOADS_ENABLED` remains `false` until malware scanning, OCR,
-  retention, and deletion policies have approved providers and tests.
-- Internal document and approval endpoints fail closed until
-  `INTERNAL_API_TOKEN` is configured.
-- Queue messages are metadata-only. Never place document text, contact details,
-  sponsor financials, payment data, or secrets on a queue.
-- Lender circulation, document issuance, consequential decisions, refunds, and
-  legal/regulatory language require explicit human approval.
+## Intentionally deferred (follow-up scope)
 
-## API surface
+- Phase C canonical immutable evidence lineage vertical slice
+- Phase D full underwriting kernel surface and parity scaffolding
+- Phase E server-derived workspace/deal authorization enforcement from integrated identity context
 
-- `GET /health`
-- `GET /api/v1/capabilities`
-- `POST /api/v1/intake`
-- `POST /api/v1/documents/register` (internal, disabled by default)
-- `POST /api/v1/approvals` (internal)
+## Deployment notes
 
-The migration adds the deal/evidence/review/decision spine, immutable approval
-and decision receipts, audit events, idempotency records, async document jobs,
-and the eight explicit model gaps identified in the workflow inventory.
+No pull-request auto-deploy is configured.
+
+Primary worker deployment remains `aimhi-deal-desk` via:
+
+```bash
+pnpm run deploy
+```
+
+This delegates to `apps/web` and preserves existing Cloudflare bindings.

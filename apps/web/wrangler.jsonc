@@ -1,7 +1,7 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "aimhi-deal-desk",
-  "main": "apps/web/src/index.ts",
+  "main": "src/index.ts",
   "compatibility_date": "2026-05-15",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "placement": { "mode": "smart" },
@@ -11,8 +11,8 @@
     "traces": { "enabled": true, "head_sampling_rate": 0.05 }
   },
   "rules": [
-    { "type": "Text", "globs": ["apps/web/public/*.html"], "fallthrough": true },
-    { "type": "Text", "globs": ["apps/web/public/*.svg"], "fallthrough": true }
+    { "type": "Text", "globs": ["public/*.html"], "fallthrough": true },
+    { "type": "Text", "globs": ["public/*.svg"], "fallthrough": true }
   ],
   "vars": {
     "APP_URL": "https://dealdesk.aimhi.io",
@@ -28,7 +28,7 @@
       "binding": "DB",
       "database_name": "aimhi-deal-desk-db",
       "database_id": "9d33eefa-0879-4686-992f-084588087d8c",
-      "migrations_dir": "migrations",
+      "migrations_dir": "../../migrations",
       "migrations_table": "d1_migrations"
     }
   ],

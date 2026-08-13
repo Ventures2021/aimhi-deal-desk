@@ -1,18 +1,32 @@
 {
   "name": "aimhi-deal-desk",
   "version": "1.0.0",
-  "description": "AiMhi Deal Desk — branded underwriting, investor tools, products, and capital site.",
+  "description": "AiMhi Deal Desk \u2014 branded underwriting, investor tools, products, and capital site.",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
-    "build": "wrangler deploy --dry-run",
-    "check": "node --check src/index.js && node --test",
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "db:migrate:local": "wrangler d1 migrations apply aimhi-deal-desk-db --local",
-    "db:migrate:remote": "wrangler d1 migrations apply aimhi-deal-desk-db --remote"
+    "build": "turbo run build",
+    "check": "pnpm run validate",
+    "deploy": "pnpm --filter @aimhi/web deploy",
+    "dev": "pnpm --filter @aimhi/web dev",
+    "format:check": "prettier --check .",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "db:migrate:local": "pnpm --filter @aimhi/web db:migrate:local",
+    "db:migrate:remote": "pnpm --filter @aimhi/web db:migrate:remote",
+    "db:validate": "pnpm --filter @aimhi/web db:validate",
+    "validate": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run db:validate && pnpm run build"
   },
-  "dependencies": {
-    "wrangler": "^4.114.0"
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.2.0",
+    "eslint": "10.8.1",
+    "prettier": "3.9.6",
+    "turbo": "2.10.9",
+    "typescript": "7.0.2",
+    "typescript-eslint": "8.67.0",
+    "tsx": "4.23.12"
   }
 }

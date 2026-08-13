@@ -5,7 +5,8 @@ export type Deal = {
   id: DealId;
   workspaceId: WorkspaceId;
   name: string;
-  stage: "intake" | "evidence" | "underwriting" | "review" | "decision" | "closed";
+  stage:
+    "intake" | "evidence" | "underwriting" | "review" | "decision" | "closed";
 };
 
 export type Document = {
@@ -19,5 +20,6 @@ export type DocumentVersion = {
   id: string;
   documentId: string;
   predecessorId?: string;
-  reviewStatus: "unreviewed" | "in_review" | "accepted" | "rejected" | "superseded";
+  reviewStatus:
+    "unreviewed" | "in_review" | "accepted" | "rejected" | "superseded";
 };

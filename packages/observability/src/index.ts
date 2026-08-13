@@ -24,7 +24,7 @@ export function logHttpRequest(
       path: url.pathname,
       status: response.status,
       durationMs: Date.now() - context.startedAt,
-      colo: request.cf?.colo || null,
+      colo: (request as Request & { cf?: { colo?: string } }).cf?.colo || null,
     }),
   );
 }

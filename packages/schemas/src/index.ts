@@ -35,7 +35,11 @@ export function parseDocumentRegisteredEnvelope(
     occurredAt: normalizeText(candidate.occurredAt, 40),
   };
 
-  if (!envelope.eventId || !envelope.jobId || envelope.eventType !== "document.registered") {
+  if (
+    !envelope.eventId ||
+    !envelope.jobId ||
+    envelope.eventType !== "document.registered"
+  ) {
     return null;
   }
 

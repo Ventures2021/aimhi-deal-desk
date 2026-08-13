@@ -113,9 +113,14 @@ export class HttpError extends Error {
 export async function verifyTurnstile(
   token: string,
   request: Request,
-  env: { TURNSTILE_REQUIRED?: string; TURNSTILE_SECRET_KEY?: string; TURNSTILE_EXPECTED_HOSTNAMES?: string },
+  env: {
+    TURNSTILE_REQUIRED?: string;
+    TURNSTILE_SECRET_KEY?: string;
+    TURNSTILE_EXPECTED_HOSTNAMES?: string;
+  },
 ): Promise<Record<string, unknown>> {
-  if (env.TURNSTILE_REQUIRED !== "true") return { success: true, bypassed: true };
+  if (env.TURNSTILE_REQUIRED !== "true")
+    return { success: true, bypassed: true };
   if (!env.TURNSTILE_SECRET_KEY) {
     throw new HttpError(503, "intake_protection_unavailable");
   }
@@ -127,17 +132,21 @@ export async function verifyTurnstile(
   const ip = request.headers.get("cf-connecting-ip");
   if (ip) body.append("remoteip", ip);
 
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    body,
-  });
+  const response = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    {
+      method: "POST",
+      body,
+    },
+  );
   if (!response.ok) throw new HttpError(503, "intake_protection_unavailable");
   const result = (await response.json()) as {
     success?: boolean;
     hostname?: string;
     action?: string;
   };
-  if (!result.success) throw new HttpError(400, "turnstile_verification_failed");
+  if (!result.success)
+    throw new HttpError(400, "turnstile_verification_failed");
 
   const expectedHostnames = new Set(
     String(env.TURNSTILE_EXPECTED_HOSTNAMES || "")
@@ -146,7 +155,10 @@ export async function verifyTurnstile(
       .filter(Boolean),
   );
 
-  if (expectedHostnames.size && !expectedHostnames.has(String(result.hostname || "").toLowerCase())) {
+  if (
+    expectedHostnames.size &&
+    !expectedHostnames.has(String(result.hostname || "").toLowerCase())
+  ) {
     throw new HttpError(400, "turnstile_hostname_mismatch");
   }
 

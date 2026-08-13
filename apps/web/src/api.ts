@@ -1,4 +1,8 @@
-import { assertScopedAuthority, AuthorizationError, requireInternalToken } from "@aimhi/authorization";
+import {
+  assertScopedAuthority,
+  AuthorizationError,
+  requireInternalToken,
+} from "@aimhi/authorization";
 import { type AuditEvent } from "@aimhi/observability";
 import {
   HttpError,
@@ -14,15 +18,19 @@ import {
 } from "./lib";
 
 type D1PreparedStatement = {
-  bind: (...values: Array<string | number | null>) => { run: () => Promise<unknown> };
+  bind: (...values: Array<string | number | null>) => {
+    run: () => Promise<unknown>;
+  };
 };
 
 type D1Database = {
   prepare: (query: string) => D1PreparedStatement;
-  batch: (statements: Array<{ run: () => Promise<unknown> }>) => Promise<unknown>;
+  batch: (
+    statements: Array<{ run: () => Promise<unknown> }>,
+  ) => Promise<unknown>;
 };
 
-type Env = {
+export type Env = {
   DB?: D1Database;
   DOCUMENTS?: { head: (key: string) => Promise<{ size: number } | null> };
   PROCESSING_QUEUE?: { send: (payload: unknown) => Promise<void> };
@@ -98,10 +106,12 @@ export async function handleCapabilities(env: Env): Promise<Response> {
       database: Boolean(env.DB),
       documentStorage: Boolean(env.DOCUMENTS),
       asynchronousProcessing: Boolean(env.PROCESSING_QUEUE),
-      turnstile: env.TURNSTILE_REQUIRED === "true" && Boolean(env.TURNSTILE_SECRET_KEY),
+      turnstile:
+        env.TURNSTILE_REQUIRED === "true" && Boolean(env.TURNSTILE_SECRET_KEY),
       internalAccess: Boolean(env.INTERNAL_API_TOKEN),
       documentUploads:
-        env.DOCUMENT_UPLOADS_ENABLED === "true" && Boolean(env.INTERNAL_API_TOKEN),
+        env.DOCUMENT_UPLOADS_ENABLED === "true" &&
+        Boolean(env.INTERNAL_API_TOKEN),
     },
     safeguards: {
       lenderCirculation: "locked_until_explicit_authorization",
@@ -112,7 +122,10 @@ export async function handleCapabilities(env: Env): Promise<Response> {
   });
 }
 
-export async function handleIntake(request: Request, env: Env): Promise<Response> {
+export async function handleIntake(
+  request: Request,
+  env: Env,
+): Promise<Response> {
   const db = requireDb(env);
   const body = await readJson(request);
   if (normalizeText(body.website, 200)) {
@@ -125,7 +138,8 @@ export async function handleIntake(request: Request, env: Env): Promise<Response
   const privacyConsent = body.privacyConsent === true;
   const errors: Record<string, string> = {};
   if (!email) errors.email = "A valid email is required.";
-  if (!ASSET_TYPES.has(assetType)) errors.assetType = "Select a supported asset type.";
+  if (!ASSET_TYPES.has(assetType))
+    errors.assetType = "Select a supported asset type.";
   if (decisionNeeded.length < 20) {
     errors.decisionNeeded = "Describe the decision in at least 20 characters.";
   }
@@ -134,12 +148,18 @@ export async function handleIntake(request: Request, env: Env): Promise<Response
     throw new HttpError(422, "validation_failed", errors);
   }
 
-  await verifyTurnstile(normalizeText(body.turnstileToken, 2_048), request, env);
+  await verifyTurnstile(
+    normalizeText(body.turnstileToken, 2_048),
+    request,
+    env,
+  );
   const id = crypto.randomUUID();
   const code = referenceCode();
   const reqId = requestId(request);
   const ip = request.headers.get("cf-connecting-ip") || "";
-  const ipHash = ip ? await sha256(`${ip}:${env.IP_HASH_PEPPER || "unconfigured"}`) : null;
+  const ipHash = ip
+    ? await sha256(`${ip}:${env.IP_HASH_PEPPER || "unconfigured"}`)
+    : null;
 
   await db.batch([
     db
@@ -294,7 +314,10 @@ export async function handleDocumentRegistration(
   return json({ accepted: true, jobId }, 202);
 }
 
-export async function handleApproval(request: Request, env: Env): Promise<Response> {
+export async function handleApproval(
+  request: Request,
+  env: Env,
+): Promise<Response> {
   requireInternal(request, env);
   const db = requireDb(env);
   const body = await readJson(request);
@@ -338,7 +361,9 @@ export async function handleApproval(request: Request, env: Env): Promise<Respon
       fields.subjectType,
       fields.subjectId,
       decision,
-      JSON.stringify(Array.isArray(body.conditions) ? body.conditions.slice(0, 20) : []),
+      JSON.stringify(
+        Array.isArray(body.conditions) ? body.conditions.slice(0, 20) : [],
+      ),
       fields.decidedBy,
       normalizeText(body.predecessorId, 64) || null,
     )
@@ -381,7 +406,14 @@ export async function routeApi(
 }
 
 export async function consumeDocumentJobs(
-  batch: { messages: Array<{ id: string; body: unknown; ack: () => void; retry: (opts: { delaySeconds: number }) => void }> },
+  batch: {
+    messages: Array<{
+      id: string;
+      body: unknown;
+      ack: () => void;
+      retry: (opts: { delaySeconds: number }) => void;
+    }>;
+  },
   env: Env,
 ): Promise<void> {
   const db = requireDb(env);

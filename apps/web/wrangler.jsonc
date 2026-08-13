@@ -8,11 +8,11 @@
   "observability": {
     "enabled": true,
     "logs": { "enabled": true, "head_sampling_rate": 1 },
-    "traces": { "enabled": true, "head_sampling_rate": 0.05 }
+    "traces": { "enabled": true, "head_sampling_rate": 0.05 },
   },
   "rules": [
     { "type": "Text", "globs": ["public/*.html"], "fallthrough": true },
-    { "type": "Text", "globs": ["public/*.svg"], "fallthrough": true }
+    { "type": "Text", "globs": ["public/*.svg"], "fallthrough": true },
   ],
   "vars": {
     "APP_URL": "https://dealdesk.aimhi.io",
@@ -21,7 +21,7 @@
     "TURNSTILE_REQUIRED": "true",
     "TURNSTILE_SITE_KEY": "0x4AAAAAAD9keFrM90txemjd",
     "TURNSTILE_EXPECTED_HOSTNAMES": "dealdesk.aimhi.io,aimhi.io",
-    "DOCUMENT_UPLOADS_ENABLED": "false"
+    "DOCUMENT_UPLOADS_ENABLED": "false",
   },
   "d1_databases": [
     {
@@ -29,12 +29,16 @@
       "database_name": "aimhi-deal-desk-db",
       "database_id": "9d33eefa-0879-4686-992f-084588087d8c",
       "migrations_dir": "../../migrations",
-      "migrations_table": "d1_migrations"
-    }
+      "migrations_table": "d1_migrations",
+    },
   ],
-  "r2_buckets": [{ "binding": "DOCUMENTS", "bucket_name": "aimhi-deal-desk-files" }],
+  "r2_buckets": [
+    { "binding": "DOCUMENTS", "bucket_name": "aimhi-deal-desk-files" },
+  ],
   "queues": {
-    "producers": [{ "binding": "PROCESSING_QUEUE", "queue": "aimhi-deal-desk-processing" }],
+    "producers": [
+      { "binding": "PROCESSING_QUEUE", "queue": "aimhi-deal-desk-processing" },
+    ],
     "consumers": [
       {
         "queue": "aimhi-deal-desk-processing",
@@ -43,8 +47,8 @@
         "max_retries": 5,
         "dead_letter_queue": "aimhi-deal-desk-processing-dlq",
         "max_concurrency": 3,
-        "retry_delay": 30
-      }
-    ]
-  }
+        "retry_delay": 30,
+      },
+    ],
+  },
 }

@@ -1,20 +1,4 @@
 {
   "extends": "./tsconfig.base.json",
-  "files": [],
-  "references": [
-    { "path": "./apps/web" },
-    { "path": "./apps/processing-worker" },
-    { "path": "./apps/workflow-worker" },
-    { "path": "./packages/authorization" },
-    { "path": "./packages/brand" },
-    { "path": "./packages/database" },
-    { "path": "./packages/documents" },
-    { "path": "./packages/domain" },
-    { "path": "./packages/evidence" },
-    { "path": "./packages/integrations" },
-    { "path": "./packages/observability" },
-    { "path": "./packages/schemas" },
-    { "path": "./packages/ui" },
-    { "path": "./packages/underwriting" }
-  ]
+  "include": ["apps/**/*.ts", "packages/**/*.ts"]
 }

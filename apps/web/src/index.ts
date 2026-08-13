@@ -1,19 +1,7 @@
 import { createRequestContext, logHttpRequest } from "@aimhi/observability";
-import { consumeDocumentJobs, routeApi } from "./api";
+import { consumeDocumentJobs, routeApi, type Env } from "./api";
 import { HttpError, json, withSecurity } from "./lib";
 import { indexHtml, markSvg } from "./page";
-
-type Env = {
-  DB?: unknown;
-  DOCUMENTS?: unknown;
-  PROCESSING_QUEUE?: unknown;
-  INTERNAL_API_TOKEN?: string;
-  TURNSTILE_REQUIRED?: string;
-  TURNSTILE_SECRET_KEY?: string;
-  TURNSTILE_EXPECTED_HOSTNAMES?: string;
-  DOCUMENT_UPLOADS_ENABLED?: string;
-  IP_HASH_PEPPER?: string;
-};
 
 const pagePaths = new Set(["/", "/index.html", "/deal-desk", "/deal-desk/"]);
 
@@ -44,7 +32,8 @@ async function handleFetch(request: Request, env: Env): Promise<Response> {
       new Response(markSvg, {
         headers: {
           "content-type": "image/svg+xml; charset=utf-8",
-          "cache-control": "public, max-age=86400, stale-while-revalidate=604800",
+          "cache-control":
+            "public, max-age=86400, stale-while-revalidate=604800",
         },
       }),
     );
@@ -92,7 +81,10 @@ export default {
             error: err?.name || "Error",
           }),
         );
-        response = json({ error: "internal_error", requestId: context.requestId }, 500);
+        response = json(
+          { error: "internal_error", requestId: context.requestId },
+          500,
+        );
       }
     }
 
@@ -102,7 +94,14 @@ export default {
   },
 
   async queue(
-    batch: { messages: Array<{ id: string; body: unknown; ack: () => void; retry: (opts: { delaySeconds: number }) => void }> },
+    batch: {
+      messages: Array<{
+        id: string;
+        body: unknown;
+        ack: () => void;
+        retry: (opts: { delaySeconds: number }) => void;
+      }>;
+    },
     env: Env,
   ): Promise<void> {
     await consumeDocumentJobs(batch, env);

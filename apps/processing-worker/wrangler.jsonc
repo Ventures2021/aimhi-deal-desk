@@ -3,5 +3,5 @@
   "name": "aimhi-deal-desk-processing-worker",
   "main": "src/index.ts",
   "compatibility_date": "2026-05-15",
-  "compatibility_flags": ["nodejs_compat"]
+  "compatibility_flags": ["nodejs_compat"],
 }

@@ -1,9 +1,5 @@
 export type DocumentJobStatus =
-  | "queued"
-  | "processing"
-  | "completed"
-  | "failed"
-  | "quarantined";
+  "queued" | "processing" | "completed" | "failed" | "quarantined";
 
 export type DocumentJob = {
   id: string;

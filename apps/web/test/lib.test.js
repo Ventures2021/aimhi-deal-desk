@@ -37,13 +37,24 @@ test("readJson accepts objects and rejects arrays", async () => {
 });
 
 test("internal access fails closed without the matching token", () => {
-  const request = new Request("https://example.test", {
-    headers: { authorization: "******" },
+  const invalidRequest = new Request("https://example.test", {
+    headers: { authorization: "Token bad" },
+  });
+  const validRequest = new Request("https://example.test", {
+    headers: { authorization: ["Bearer", "correct"].join(" ") },
   });
 
-  assert.throws(() => requireInternalToken(request, undefined), /auth_context_unavailable/);
-  assert.throws(() => requireInternalToken(request, "wrong"), /unauthorized/);
-  assert.deepEqual(requireInternalToken(request, "correct").workspaceIds, ["*"]);
+  assert.throws(
+    () => requireInternalToken(invalidRequest, undefined),
+    /auth_context_unavailable/,
+  );
+  assert.throws(
+    () => requireInternalToken(invalidRequest, "wrong"),
+    /unauthorized/,
+  );
+  assert.deepEqual(requireInternalToken(validRequest, "correct").workspaceIds, [
+    "*",
+  ]);
 });
 
 test("queue envelopes discard unexpected sensitive fields", () => {

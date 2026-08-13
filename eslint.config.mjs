@@ -8,7 +8,15 @@ export default tseslint.config(
   {
     files: ["**/*.ts"],
     rules: {
-      "@typescript-eslint/no-explicit-any": "error"
-    }
-  }
+      "@typescript-eslint/no-explicit-any": "error",
+    },
+  },
+  {
+    files: ["**/*.test.js"],
+    languageOptions: {
+      globals: {
+        Request: "readonly",
+      },
+    },
+  },
 );

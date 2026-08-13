@@ -1,6 +1,8 @@
 export type D1DatabaseLike = {
   prepare: (query: string) => {
-    bind: (...values: Array<string | number | null>) => { run: () => Promise<unknown> };
+    bind: (...values: Array<string | number | null>) => {
+      run: () => Promise<unknown>;
+    };
   };
 };
 

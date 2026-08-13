@@ -14,9 +14,9 @@ export default {
     return response;
   },
 
-  async queue(
-    batch: { messages: Array<{ body: unknown; ack: () => void }> },
-  ): Promise<void> {
+  async queue(batch: {
+    messages: Array<{ body: unknown; ack: () => void }>;
+  }): Promise<void> {
     for (const message of batch.messages) {
       parseDocumentRegisteredEnvelope(message.body);
       message.ack();

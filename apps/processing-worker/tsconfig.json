@@ -1,9 +1,4 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*.ts"],
-  "references": [
-    { "path": "../../packages/integrations" },
-    { "path": "../../packages/observability" },
-    { "path": "../../packages/schemas" }
-  ]
+  "include": ["src/**/*.ts"]
 }

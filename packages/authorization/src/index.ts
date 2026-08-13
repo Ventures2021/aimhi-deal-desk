@@ -10,12 +10,17 @@ export type ScopedResource = {
 };
 
 export class AuthorizationError extends Error {
-  constructor(public readonly code: "unauthorized" | "auth_context_unavailable") {
+  constructor(
+    public readonly code: "unauthorized" | "auth_context_unavailable",
+  ) {
     super(code);
   }
 }
 
-export function requireInternalToken(request: Request, token?: string): AuthContext {
+export function requireInternalToken(
+  request: Request,
+  token?: string,
+): AuthContext {
   if (!token) {
     throw new AuthorizationError("auth_context_unavailable");
   }

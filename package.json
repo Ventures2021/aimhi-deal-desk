@@ -13,6 +13,6 @@
     "db:migrate:remote": "wrangler d1 migrations apply aimhi-deal-desk-db --remote"
   },
   "dependencies": {
-    "wrangler": "^4.114.0"
+    "wrangler": "^4.131.0"
   }
 }
